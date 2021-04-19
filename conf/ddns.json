@@ -1,0 +1,9 @@
+{
+  "hosts": [
+    {
+      "host": "YOUR_SUBDOMAIN",
+      "password": "YOUR_NAMECHEAP_DDNS_PASSWORD",
+      "domain": "YOUR_DOMAIN_NAME.TLD"
+    }
+  ]
+}

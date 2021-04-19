@@ -1,0 +1,14 @@
+[Unit]
+Description=Namecheap DDNS updating service.
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+WorkingDirectory=/home/{YOUR_USER_FOLDER}/ncddns
+ExecStart=/bin/bash /home/{YOUR_USER_FOLDER}/ncddns/ncddns.sh conf/ddns.json
+
+[Install]
+WantedBy=multi-user.target
