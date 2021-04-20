@@ -8,8 +8,6 @@ If you own a domain and you bought it from namecheap.com then you've probably kn
 
 ## What is required
 
-<hr>
-
 In order for this script to work, the following are required:
 
 - A server that'll run 24/7 at the place where the dynamic addresses will be updated (this could be a Raspberry Pi, NAS, Router etc).
@@ -18,12 +16,7 @@ In order for this script to work, the following are required:
 
 ## How to set it up
 
-<hr>
-
 > -- NOTICE -- I'm personally using the script on a Raspberry Pi that runs Ubuntu server 20.04, so the commands that I'll be using are going to work on Ubuntu or some other Debian-based distro. However, if you're using a different distro that uses **systemd** then simply adjust the commands accordingly.
-
-<hr>
-<br>
 
 1. Download the script on `home/user` folder by either using **Git** or clicking on the **Download zip** button or maybe with `wget` if you don't have a GUI and have/want to use the terminal. For example, to download the zip with `wget` you can do something like:
 
@@ -56,8 +49,6 @@ LICENSE  README.md  conf  ncddns.sh  systemd-service
 ```
 
 The `LICENSE` and `README.md` files don't need any explaination obviously. So, `ncddns.sh` it's the script itself, and `conf` and `systemd-service` folders contain the `ddns.json` and `ncddns.service` files that we'll use to configure our custom domains and run the script as a service respectively.
-
-<hr>
 
 2. The second step involves configuring your custom addresses, which is a matter of editting the JSON file. By using your favourite editor, `vim`, `nano` etc. edit the `ddns.json` file which you'll notice initially contains the following:
 
@@ -93,8 +84,6 @@ sudo apt update && sudo apt install jq
 ```
 
 If you're on a non-debian distro you can see how you can install it on your own system by visiting jq's [website](https://stedolan.github.io/jq/download/).
-
-<hr>
 
 3. The last step is to setup the `systemd` service so that the script will run on the background. The first thing we need to do is to edit `ncddns.service` which will contain the following:
 
@@ -154,25 +143,13 @@ Apr 19 11:13:40 server_name bash[27576]: 19-04-2021 11:13:40 - Successfully upda
 
 Of course, some of the information above will be corresponding to your system such as the path as well as the domain you're updating and the IP address that is being updating to.
 
-<hr>
-
 ## Some Considerations
-
-<hr>
-
-<br>
 
 ### Regarding the script's location
 
-<hr>
-
 The location that I'm personally using to store the script is my home user's folder. However, that doesn't have to be like this. Feel free to save the script in whatever folder you like, just keep in mind that you'll need to update `ncddns.service` accordingly, but also you might have to edit the script itself to make it work. So, if you know what you're doing feel free to change the script however you like. I just keep in my home folder for simplicity and perhaps for not having to deal with permission issues.
 
-<br>
-
 ### If you run into permission issues
-
-<hr>
 
 In case you have any permission issues try doing the following. While on your user's folder first run:
 
@@ -188,11 +165,7 @@ sudo chmod +x ncddns.sh
 
 You should now have permissions over the script and the script will be executable.
 
-<br>
-
 ### Regarding the log file
-
-<hr>
 
 After you start the service and verify that it's running succesfully, if you go to the `ncddns/log` directory, you'll notice that a `ncddns.log` file appeared that shows that your addresses have been updated sucessfully to the external IP address of your network and it'll also include the timestamp. Since that the intended purpose of the script is to run forever (or realistically for as long as possible!), that log file might start to get very large in terms of disk space after some time. In order to resolve that, you can either open the script and comment out line 30 by adding a hashtag # in front of that line, or if you want to actually see the log from time to time to make sure that your addresses are actually updating as expected, you can setup a **Cronjob** to delete that file every some specified period of time. To do that you simple run:
 
