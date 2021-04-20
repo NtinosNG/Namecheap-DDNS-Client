@@ -4,7 +4,7 @@
 
 <hr>
 
-If you own a domain and you bought it from namecheap.com then you've probably know that they offer DDNS service for your domain (I found out about that recently actually! :D) and now you're looking for a client service to update your custom addresses. This script does exactly that! It gets all the instructions from [here](https://www.namecheap.com/support/knowledgebase/article.aspx/29/11/how-do-i-use-a-browser-to-dynamically-update-the-hosts-ip/) and uses [curl](https://curl.se/) (instead of a browser) to update your IP addresses every 5 minutes by running as a [systemd](https://en.wikipedia.org/wiki/Systemd) service so that you won't have to do anything else after you set it up! So, if you have a server that runs 24/7 this script might be what you were looking for!
+If you own a domain and you bought it from namecheap.com then you probably know that they offer DDNS service for your domain (I found out about that recently actually! :D) and now you're looking for a client service to update your custom addresses. This script does exactly that! It gets all the instructions from [here](https://www.namecheap.com/support/knowledgebase/article.aspx/29/11/how-do-i-use-a-browser-to-dynamically-update-the-hosts-ip/) and uses [curl](https://curl.se/) (instead of a browser) to update your IP addresses every 5 minutes by running as a [systemd](https://en.wikipedia.org/wiki/Systemd) service so that you won't have to do anything else after you set it up! So, if you have a server that runs 24/7 this script might be what you're looking for!
 
 ## What is required
 
@@ -48,7 +48,7 @@ Lastly, run `cd ncddns` to change your directory to the script's folder. If you 
 LICENSE  README.md  conf  ncddns.sh  systemd-service
 ```
 
-The `LICENSE` and `README.md` files don't need any explaination obviously. So, `ncddns.sh` it's the script itself, and `conf` and `systemd-service` folders contain the `ddns.json` and `ncddns.service` files that we'll use to configure our custom domains and run the script as a service respectively.
+The `LICENSE` and `README.md` files don't need any explanation obviously. So, `ncddns.sh` it's the script itself, and `conf` and `systemd-service` folders contain the `ddns.json` and `ncddns.service` files that we'll use to configure our custom domains and run the script as a service respectively.
 
 2. The second step involves configuring your custom addresses, which is a matter of editting the JSON file. By using your favourite editor, `vim`, `nano` etc. edit the `ddns.json` file which you'll notice initially contains the following:
 
@@ -77,7 +77,7 @@ As you can see, all you need to do is to replace the three keys, `host`, `passwo
  }
 ```
 
-And that was it for configuring the addresses! Of course, it's a JSON file, so you can add as many addresses as you need by simple separating them by comma. Lastly, to finish up with this step, all we need to do is to install `jq` so that the script can process our JSON file. To do that simple run:
+And that was it for configuring the addresses! Of course, it's a JSON file, so you can add as many addresses as you need by simply separating them by comma. Lastly, to finish up with this step, all we need to do is to install `jq` so that the script can process our JSON file. To do that simply run:
 
 ```
 sudo apt update && sudo apt install jq
@@ -120,7 +120,7 @@ sudo systemctl enable ncddns.service
 sudo systemctl start ncddns.service
 ```
 
-Great, now if everything was sucessful and you didn't get any errors, if you run:
+Great, now if everything was successful and you didn't get any errors, if you run:
 
 ```
 sudo systemctl status ncddns.service
@@ -180,3 +180,7 @@ and then select to edit the file with your editor of choice when prompted and th
 ```
 
 This line will make sure that the `ncddns.log` file will be deleted every day at 00:00. An easy way to figure out how to set that up according to what you want is by visiting [crontab.guru](https://crontab.guru/) site and experiment there! Lastly, you'll need to change of course the `USER_FOLDER` above accordingly, especially if you decided to keep the script in different location other than your user's folder.
+
+### Regarding `systemd`
+
+If your server doesn't support `systemd` (for example you might want use it on an OpenWRT system), this doesn't necessarily mean that you can't use this script, but you'll need to make it run somehow automatically and on the background. You might be able to that by creating a `init` service that'll run by using the `init` service management daemon and then make corresponding alterations to the script (if you have to) in order to make it work.  
