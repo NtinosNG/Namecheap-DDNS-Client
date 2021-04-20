@@ -1,14 +1,49 @@
+# The credit for this file goes to Clownfused and their gist https://gist.github.com/Clownfused/1144a4547fc428f7f690cd81b912ac74
+
+# This systemd service configuration will ensure that your service will
+# attempt to restart your service FOREVER instead of the systemd default
+# of 5 failed retries within 10 seconds and then giving up forever.
+
 [Unit]
 Description=Namecheap DDNS updating service.
+# Attempt to start the service after network connection has been established
 After=network.target
+# NOTES ABOUT THE StartLimitBurst OPTION:
+# systemd default is StartLimitBurst=5 (give up after 5 failed attempts)
+# if you do NOT set set this option systemd will attempt
+# to restart your service forever.
+
+# NOTES ABOUT THE StartLimitIntervalSec OPTION:
+# systemd default is set StartLimitIntervalSec=10 - Set it to 0
+# and systemd will attempt to restart your service forever.
 StartLimitIntervalSec=0
 
 [Service]
 Type=simple
-Restart=always
-RestartSec=1
 WorkingDirectory=/home/{YOUR_USER_FOLDER}/ncddns
 ExecStart=/bin/bash /home/{YOUR_USER_FOLDER}/ncddns/ncddns.sh conf/ddns.json
+# NOTES ABOUT THE Restart=always OPTION:
+# By default, when you configure Restart=always systemd gives up
+# restarting your service if it fails to start more than 5 times
+# within a 10 seconds interval. Forever.
+# There are two [Unit] configuration options responsible for this
+# StartLimitBurst=5 and StartLimitIntervalSec=10
+
+# The simple fix that always works is to:
+# Set StartLimitIntervalSec=0 in [Unit] and do NOT add StartLimitBurst=5 in [Unit]
+# This way, systemd will attempt to restart your service FOREVER.
+Restart=always
+# NOTES ABOUT THE RestartSec OPTION:
+# By default, systemd attempts a restart after 100ms.
+# If you set RestartSec to restart after 3 seconds (RestartSec=3) then
+# the systemd default of [Unit] StartLimitBurst=5 and StartLimitIntervalSec=10 will never
+# have a chance to execute their tasks (reach 5 failed retries within 10 seconds)
+
+# The simple fix that always works is to:
+# Set StartLimitIntervalSec=0 in [Unit] and do NOT add StartLimitBurst=5 in [Unit] (As mentioned and explained above)
+# Then set RestartSec=1 - You should to set RestartSec to at least 1 second
+# to avoid putting too much stress on your server (if) when things start going wrong.
+RestartSec=1
 
 [Install]
 WantedBy=multi-user.target
