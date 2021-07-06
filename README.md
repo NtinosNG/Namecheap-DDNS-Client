@@ -4,7 +4,7 @@
 
 <hr>
 
-If you own a domain and you bought it from namecheap.com then you probably know that they offer DDNS service for your domain (I found out about that recently actually! :D) and now you're looking for a client service to update your custom addresses. This script does exactly that! It gets all the instructions from [here](https://www.namecheap.com/support/knowledgebase/article.aspx/29/11/how-do-i-use-a-browser-to-dynamically-update-the-hosts-ip/) and uses [curl](https://curl.se/) (instead of a browser) to update your IP addresses every 5 minutes by running as a [systemd](https://en.wikipedia.org/wiki/Systemd) service so that you won't have to do anything else after you set it up! So, if you have a server that runs 24/7 this script might be what you're looking for!
+If you own a domain and you bought it from namecheap.com then you've probably learned that they offer DDNS service for your domain and now you're looking for a client service to update your custom addresses. This script does exactly that! It gets all the instructions from [here](https://www.namecheap.com/support/knowledgebase/article.aspx/29/11/how-do-i-use-a-browser-to-dynamically-update-the-hosts-ip/) and uses [curl](https://curl.se/) (instead of a browser) to update your IP addresses every 5 minutes by running as a [systemd](https://en.wikipedia.org/wiki/Systemd) service so that you won't have to do anything else after you set it up! So, if you have a server that runs 24/7 this script might be what you're looking for!
 
 ## What is required
 
